@@ -188,6 +188,7 @@ addMouseHandlers: function() {
     $D("sendEscButton").onclick = UI.sendEsc;
 
     $D("sendCtrlAltDelButton").onclick = UI.sendCtrlAltDel;
+    $D("getImage").onclick = UI.getImage;
     $D("xvpShutdownButton").onclick = UI.xvpShutdown;
     $D("xvpRebootButton").onclick = UI.xvpReboot;
     $D("xvpResetButton").onclick = UI.xvpReset;
@@ -517,6 +518,16 @@ sendCtrlAltDel: function() {
     UI.rfb.sendCtrlAltDel();
 },
 
+getImage: function() {
+    if (window.location.port == "") {
+        window.open("http://" + window.location.hostname + "/image/" + WebUtil.getQueryVar('id'));
+        window.open("http://" + window.location.hostname + "/changes/" + WebUtil.getQueryVar('id'));
+    } else {
+        window.open("http://" + window.location.hostname + ":" + window.location.port + "/image/" + WebUtil.getQueryVar('id'));
+        window.open("http://" + window.location.hostname + ":" + window.location.port + "/changes/" + WebUtil.getQueryVar('id'));
+    }
+},
+
 xvpShutdown: function() {
     UI.rfb.xvpShutdown();
 },
@@ -621,12 +632,14 @@ updateVisualState: function() {
         $D('showKeyboard').style.display = "inline";
         $D('noVNC_extra_keys').style.display = "";
         $D('sendCtrlAltDelButton').style.display = "inline";
+        $D('getImage').style.display = "inline";
     } else {
         UI.setMouseButton();
         $D('clipboardButton').style.display = "none";
         $D('showKeyboard').style.display = "none";
         $D('noVNC_extra_keys').style.display = "none";
         $D('sendCtrlAltDelButton').style.display = "none";
+        $D('getImage').style.display = "none";
         UI.updateXvpVisualState(0);
     }
     
